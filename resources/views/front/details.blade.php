@@ -75,13 +75,13 @@
 		</article>
 		<div class="side-bar flex flex-col w-[300px] shrink-0 gap-10">
 			<div class="ads flex flex-col gap-3 w-full">
-				<a href="">
-					<img src="assets/images/iklans/banner.png" class="object-contain w-full h-full" alt="ads" />
+				<a href="{{$bannerads->link}}">
+					<img src="{{Storage::url($bannerads->thumbnail)}}" class="object-contain w-full h-full" alt="ads" />
 				</a>
-				<p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">
+				<!-- <p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">
 					Our Advertisement <a href="#" class="w-[18px] h-[18px]"><img
 							src="assets/images/icons/message-question.svg" alt="icon" /></a>
-				</p>
+				</p> -->
 			</div>
 			<div id="More-from-author" class="flex flex-col gap-4">
 				<p class="font-bold">More From Author</p>
@@ -143,10 +143,10 @@
 					<img src="assets/images/iklans/bannerWide.png" class="object-cover w-full h-full" alt="ads" />
 				</div>
 			</a>
-			<p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">
+			<!-- <p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">
 				Our Advertisement <a href="#" class="w-[18px] h-[18px]"><img
 						src="assets/images/icons/message-question.svg" alt="icon" /></a>
-			</p>
+			</p> -->
 		</div>
 	</section>
 	<section id="Up-to-date" class="w-full flex justify-center mt-[70px] py-[50px] bg-[#F9F9FC]">
@@ -158,7 +158,28 @@
 				</h2>
 			</div>
 			<div class="grid grid-cols-3 gap-[30px]">
-				<a href="details.html" class="card-news">
+				@forelse($articles as $article)
+				<a href="{{route('front.details', $article->slug)}}" class="card">
+				<div
+					class="flex flex-col gap-4 p-[26px_20px] transition-all duration-300 ring-1 ring-[#EEF0F7] hover:ring-2 hover:ring-[#FF6B18] rounded-[20px] overflow-hidden bg-white">
+					<div class="thumbnail-container h-[200px] relative rounded-[20px] overflow-hidden">
+						<div
+							class="badge absolute left-5 top-5 bottom-auto right-auto flex p-[8px_18px] bg-white rounded-[50px]">
+							<p class="text-xs leading-[18px] font-bold">{{$article->category->name}}</p>
+						</div>
+						<img src="{{Storage::url($article->thumbnail)}}" alt="thumbnail photo"
+							class="w-full h-full object-cover" />
+					</div>
+					<div class="flex flex-col gap-[6px]">
+						<h3 class="text-lg leading-[27px] font-bold">{{substr($article->name, 0, 50)}}{{strlen($article->name) > 50 ? '...' : ''}}</h3>
+						<p class="text-sm leading-[21px] text-[#A3A6AE]">{{$article->created_at->format('M d, Y')}}</p>
+					</div>
+				</div>
+				</a>
+				@empty
+				<p>Belum ada data lainnya</p>
+				@endforelse
+				<!-- <a href="details.html" class="card-news">
 					<div
 						class="rounded-[20px] ring-1 ring-[#EEF0F7] p-[26px_20px] flex flex-col gap-4 hover:ring-2 hover:ring-[#FF6B18] transition-all duration-300 bg-white">
 						<div
@@ -211,12 +232,13 @@
 							<p class="text-sm leading-[21px] text-[#A3A6AE]">12 Jun, 2024</p>
 						</div>
 					</div>
-				</a>
+				</a> -->
 			</div>
 		</div>
 	</section>
 
 	<script src="{{asset('customjs/two-lines-text.js')}}"></script>
+	<script src="https://cdn.tailwindcss.com"></script>
 </body>
 
 </html>
