@@ -85,62 +85,43 @@
 			</div>
 			<div id="More-from-author" class="flex flex-col gap-4">
 				<p class="font-bold">More From Author</p>
-				<a href="" class="card-from-author">
+				@forelse($author_news as $item_news)
+				<a href="{{route('front.details', $item_news->slug)}}" class="card-from-author">
 					<div
 						class="rounded-[20px] ring-1 ring-[#EEF0F7] p-[14px] flex gap-4 hover:ring-2 hover:ring-[#FF6B18] transition-all duration-300">
 						<div class="w-[70px] h-[70px] flex shrink-0 overflow-hidden rounded-2xl">
-							<img src="assets/images/thumbnails/th-demonstration.png" class="object-cover w-full h-full"
+							<img src="{{Storage::url($item_news->thumbnail)}}" class="object-cover w-full h-full"
 								alt="thumbnail">
 						</div>
 						<div class="flex flex-col gap-[6px]">
-							<p class="line-clamp-2 font-bold">Gaya pakaian pernikahan artis Lorem, ipsum dolor.</p>
-							<p class="text-xs leading-[18px] text-[#A3A6AE]">12 Jun, 2024 • Entertainment</p>
+							<p class="line-clamp-2 font-bold">
+								{{substr($item_news->name, 0, 60)}}{{strlen($item_news->name) > 60 ? '...' : ''}}
+							</p>
+							<p class="text-xs leading-[18px] text-[#A3A6AE]">{{$item_news->created_at->format('M d, Y')}} • {{$item_news->category->name}}</p>
 						</div>
 					</div>
 				</a>
-				<a href="" class="card-from-author">
-					<div
-						class="rounded-[20px] ring-1 ring-[#EEF0F7] p-[14px] flex gap-4 hover:ring-2 hover:ring-[#FF6B18] transition-all duration-300">
-						<div class="w-[70px] h-[70px] flex shrink-0 overflow-hidden rounded-2xl">
-							<img src="assets/images/thumbnails/th-cyclist.png" class="object-cover w-full h-full"
-								alt="thumbnail">
-						</div>
-						<div class="flex flex-col gap-[6px]">
-							<p class="line-clamp-2 font-bold">Gaya pakaian pernikahan artis Lorem, ipsum dolor.</p>
-							<p class="text-xs leading-[18px] text-[#A3A6AE]">12 Jun, 2024 • Entertainment</p>
-						</div>
-					</div>
-				</a>
-				<a href="" class="card-from-author">
-					<div
-						class="rounded-[20px] ring-1 ring-[#EEF0F7] p-[14px] flex gap-4 hover:ring-2 hover:ring-[#FF6B18] transition-all duration-300">
-						<div class="w-[70px] h-[70px] flex shrink-0 overflow-hidden rounded-2xl">
-							<img src="assets/images/thumbnails/model.png" class="object-cover w-full h-full"
-								alt="thumbnail">
-						</div>
-						<div class="flex flex-col gap-[6px]">
-							<p class="line-clamp-2 font-bold">Gaya pakaian pernikahan artis Lorem, ipsum dolor.</p>
-							<p class="text-xs leading-[18px] text-[#A3A6AE]">12 Jun, 2024 • Entertainment</p>
-						</div>
-					</div>
-				</a>
+				@empty
+				<p>Belum ada artikel terbaru lainnya</p>
+				@endforelse
+
 			</div>
-			<div class="ads flex flex-col gap-3 w-full">
+			<!-- <div class="ads flex flex-col gap-3 w-full">
 				<a href="">
 					<img src="assets/images/iklans/banner1.png" class="object-contain w-full h-full" alt="ads" />
 				</a>
 				<p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">
-					Our Advertisement <a href="#" class="w-[18px] h-[18px]"><img
-							src="assets/images/icons/message-question.svg" alt="icon" /></a>
+					Our Advertisement <a href="{{$bannerads->link}}" class="w-[18px] h-[18px]"><img
+							src="{{Storage::url($bannerads->thumbnail)}}" alt="icon" /></a>
 				</p>
-			</div>
+			</div> -->
 		</div>
 	</section>
 	<section id="Advertisement" class="max-w-[1130px] mx-auto flex justify-center mt-[70px]">
 		<div class="flex flex-col gap-3 shrink-0 w-fit">
-			<a href="#">
+			<a href="{{$bannerads->link}}">
 				<div class="w-[900px] h-[120px] flex shrink-0 border border-[#EEF0F7] rounded-2xl overflow-hidden">
-					<img src="assets/images/iklans/bannerWide.png" class="object-cover w-full h-full" alt="ads" />
+					<img src="{{Storage::url($bannerads->thumbnail)}}" class="object-cover w-full h-full" alt="ads" />
 				</div>
 			</a>
 			<!-- <p class="font-medium text-sm leading-[21px] text-[#A3A6AE] flex gap-1">

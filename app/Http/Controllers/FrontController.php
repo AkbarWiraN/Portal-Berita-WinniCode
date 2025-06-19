@@ -172,6 +172,12 @@ class FrontController extends Controller
         // ->take(1)
         ->first();
 
-        return view('front.details', compact('articleNews', 'categories', 'articles', 'bannerads'));
+        $author_news = ArticleNews::where('author_id', $articleNews->author_id)
+        ->where('id', '!=', $articleNews->id)
+        ->inRandomOrder()
+        ->take(4)
+        ->get();
+
+        return view('front.details', compact('author_news', 'articleNews', 'categories', 'articles', 'bannerads'));
     }
 }
